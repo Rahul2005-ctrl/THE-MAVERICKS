@@ -92,12 +92,12 @@
     .reg-info {
       pointer-events: auto;
       padding: 50px 40px;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      /* Optimized for performance: Removed heavy backdrop-filter blur. 
+         Using a more opaque white gives a premium glass look without GPU lag over videos. */
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,1);
     }
 
     .reg-headline {
@@ -168,13 +168,12 @@
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.6); /* Frosted light glass */
-      backdrop-filter: blur(32px);
-      -webkit-backdrop-filter: blur(32px);
+      /* Optimized for performance */
+      background: rgba(255, 255, 255, 0.85);
       padding: 50px 40px;
       border-radius: 32px;
       box-shadow: 0 40px 80px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,1);
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.9);
     }
 
     .reg-container h2 {
