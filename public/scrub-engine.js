@@ -271,7 +271,8 @@ function mountLetsScroll(container, config) {
   }
 
   function raf() {
-    const eps = isMobile() ? 0.02 : 0.008;   // coarser seek step on phones = fewer decodes
+    // Increase epsilon slightly to reduce decode frequency on low-end devices
+    const eps = isMobile() ? 0.04 : 0.012;
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
       if (!s.hasClip || !s.ready || !s.video) continue;
@@ -280,7 +281,9 @@ function mountLetsScroll(container, config) {
       // for a few frames during rapid scrolls before jumping ahead.
       if (isMobile() && s.video.seeking) continue;
       if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
-      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.18);
+      // Lower lerp factor (0.10 instead of 0.18) for a much smoother, buttery cinematic glide
+      // This floatier movement naturally hides decode lag on lower-end devices.
+      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.10);
       const dur = s.video.duration || 1;
       const t = clamp(s.cur, 0, 0.999) * dur;
       if (Math.abs(s.video.currentTime - t) > eps) { try { s.video.currentTime = t; } catch (e) {} }
