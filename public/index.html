@@ -54,7 +54,7 @@
       position: relative;
     }
 
-    /* Vibrant Animated Decorative Glow */
+    /* Vibrant Animated Decorative Glow (Optimized for Performance) */
     .reg-wrapper::before, .reg-wrapper::after {
       content: "";
       position: absolute;
@@ -66,18 +66,19 @@
       transform: translate(-50%, -50%);
       z-index: -1;
       pointer-events: none;
-      filter: blur(100px);
-      animation: pulse-glow 8s infinite alternate;
+      /* Removed expensive filter:blur to fix lag, relying on smooth gradients instead */
+      animation: pulse-glow 8s infinite alternate ease-in-out;
+      will-change: transform, opacity;
     }
     
     .reg-wrapper::before {
-      background: radial-gradient(circle, rgba(0, 85, 255, 0.25) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(0, 85, 255, 0.15) 0%, rgba(0, 85, 255, 0.05) 40%, transparent 70%);
       margin-left: -200px;
       margin-top: -100px;
     }
     
     .reg-wrapper::after {
-      background: radial-gradient(circle, rgba(170, 0, 255, 0.25) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(170, 0, 255, 0.15) 0%, rgba(170, 0, 255, 0.05) 40%, transparent 70%);
       margin-left: 200px;
       margin-top: 100px;
       animation-delay: -4s;
