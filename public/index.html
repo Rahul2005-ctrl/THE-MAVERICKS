@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tech Campus — the world of Tech Campus</title>
+  <meta name="description" content="Scroll to fly through the world of Tech Campus." />
+  <style>
+    :root, .sw-root {
+      --sw-bg: #F8F9FA;
+      --sw-ink: #111111;
+      --sw-ink-soft: #444444;
+      --sw-accent: #0055ff;
+    }
+
+    /* Main text box styling */
+    .sw-copy {
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 40px !important;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,1);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .sw-copylayer::before {
+      display: none !important;
+    }
+
+    /* Registration section styling (Premium Light Theme for seamless footer transition) */
+    #registration {
+      display: none;
+      position: relative;
+      z-index: 200; /* Must be >120 to scroll over the final video scene */
+      /* Smooth gradient transition from transparent to solid light */
+      background: linear-gradient(to bottom, transparent 0%, var(--sw-bg) 15%, var(--sw-bg) 100%);
+      padding: 250px 20px 30px; /* Reduced bottom padding from 80px to 30px */
+      margin-top: -150px; /* Pull it up to overlap the end of the video track */
+      font-family: system-ui, -apple-system, sans-serif;
+      text-align: center;
+      color: var(--sw-ink);
+      pointer-events: none; /* Let clicks pass through the transparent top gradient */
+    }
+
+    .reg-container {
+      pointer-events: auto; /* Re-enable clicks for the form card */
+      max-width: 500px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.6); /* Frosted light glass */
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      padding: 60px 50px;
+      border-radius: 32px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,1);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .reg-container h2 {
+      margin-top: 0;
+      font-size: 2.8rem;
+      color: var(--sw-ink);
+      margin-bottom: 15px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .reg-container p {
+      color: var(--sw-ink-soft);
+      margin-bottom: 40px;
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    .reg-form-group {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .reg-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--sw-ink-soft);
+    }
+
+    .reg-form-group input {
+      width: 100%;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      font-size: 1.05rem;
+      color: var(--sw-ink);
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    .reg-form-group input::placeholder {
+      color: #999;
+    }
+
+    .reg-form-group input:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: var(--sw-accent);
+      box-shadow: 0 0 0 4px rgba(0, 85, 255, 0.15);
+    }
+
+    .reg-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #0055ff, #0044cc);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 8px 20px rgba(0, 85, 255, 0.25);
+    }
+
+    .reg-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0, 85, 255, 0.35);
+    }
+
+    .reg-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(0, 85, 255, 0.2);
+    }
+
+    .footer-bottom {
+      pointer-events: auto; /* Re-enable clicks for footer text links */
+      margin-top: 60px; /* Reduced from 100px */
+      font-size: 0.95rem;
+      color: var(--sw-ink-soft);
+      display: flex;
+      justify-content: space-between;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding-top: 30px;
+    }
+
+    /* Topbar Premium Glass Header */
+    .sw-topbar {
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(32px) !important;
+      -webkit-backdrop-filter: blur(32px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05) !important;
+      padding-top: 14px !important;
+      padding-bottom: 14px !important;
+    }
+
+    .sw-nav {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      border: none !important;
+    }
+
+    .sw-brand, .sw-brand__name {
+      color: var(--sw-ink) !important;
+    }
+    
+    .sw-nav__item {
+      color: var(--sw-ink-soft) !important;
+      font-weight: 600;
+    }
+    
+    .sw-nav__item:hover {
+      color: var(--sw-ink) !important;
+      background: rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .sw-nav__item.is-active {
+      color: #fff !important;
+      background: var(--sw-accent) !important;
+    }
+
+    .sw-topcta {
+      color: #ffffff !important;
+      background: var(--sw-accent) !important;
+      box-shadow: 0 4px 12px rgba(0, 85, 255, 0.25);
+    }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world"></div>
+
+  <!-- Registration Section -->
+  <section id="registration">
+    <div class="reg-container">
+      <h2>Join Tech Campus</h2>
+      <p>Secure your spot in the next generation of tech innovators. Enroll today to access our world-class facilities and programs.</p>
+      
+      <form onsubmit="event.preventDefault(); alert('Registration submitted successfully!');">
+        <div class="reg-form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        
+        <div class="reg-form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        
+        <div class="reg-form-group">
+          <label for="program">Area of Interest</label>
+          <input type="text" id="program" placeholder="e.g. Cybersecurity, Robotics" required>
+        </div>
+        
+        <button type="submit" class="reg-btn">Enroll Now</button>
+      </form>
+    </div>
+    
+    <div class="footer-bottom">
+      <div>&copy; 2026 Tech Campus. All rights reserved.</div>
+      <div>Designed for the Future.</div>
+    </div>
+  </section>
+
+  <script src="scrub-engine.js"></script>
+  <script>
+    mountLetsScroll(document.getElementById('world'), {
+      brand: { name: 'Tech Campus', href: '#top' },
+      cta: { label: 'Enroll Now', href: '#registration' },
+      hint: 'scroll to fly in',
+      diveScroll: 1.3,
+      connScroll: 0.9,
+      sections: [
+        {
+          id: 'hall', label: 'Grand Hall',
+          still: 'assets/img/still_0.jpeg',
+          clip: 'assets/vid/dive_0.mp4',
+          accent: '#444444',
+          eyebrow: 'Welcome',
+          title: 'The Grand Hall.',
+          body: 'Step into a breathtaking space where innovation takes center stage. A pristine white floor and glowing pedestal await your arrival.',
+          tags: ['Innovation', 'Minimalist'],
+        },
+        {
+          id: 'campus', label: 'Campus',
+          still: 'assets/img/still_1.jpeg',
+          clip: 'assets/vid/dive_1.mp4',
+          accent: '#2b7a0b',
+          eyebrow: 'Vibrant Life',
+          title: 'Vibrant Campus Life.',
+          body: 'Experience a lively, futuristic campus buzzing with energy, lush greenery, and colorful welcome booths.',
+          tags: ['Lively', 'Greenery'],
+        },
+        {
+          id: 'lab', label: 'Computer Lab',
+          still: 'assets/img/still_2.jpeg',
+          clip: 'assets/vid/dive_2.mp4',
+          accent: '#0055ff',
+          eyebrow: 'Coding Hub',
+          title: 'The Coding Hub.',
+          body: 'Immerse yourself in our state-of-the-art computer labs, where students collaborate to build the software of tomorrow.',
+          tags: ['Hardware', 'Coding'],
+        },
+        {
+          id: 'arena', label: 'Gaming Arena',
+          still: 'assets/img/still_3.jpeg',
+          clip: 'assets/vid/dive_3.mp4',
+          accent: '#aa00ff',
+          eyebrow: 'High Tech',
+          title: 'Cybersecurity & Esports.',
+          body: 'Step onto the central stage illuminated by dramatic blue lighting, surrounded by neon server racks and massive screens.',
+          tags: ['Esports', 'Cybersecurity'],
+        },
+        {
+          id: 'workshop', label: 'Workshop',
+          still: 'assets/img/still_4.jpeg',
+          clip: 'assets/vid/dive_4.mp4',
+          accent: '#e65100',
+          eyebrow: 'Hands-on',
+          title: 'The Innovation Workshop.',
+          body: 'Bring your ideas to life with hands-on tools, advanced robotic arms, and blueprint tables designed for creativity.',
+          tags: ['Creative', 'Robotics'],
+        },
+        {
+          id: 'finale', label: 'Pavilion',
+          still: 'assets/img/still_5.jpeg',
+          clip: 'assets/vid/dive_5.mp4',
+          accent: '#ff0055',
+          eyebrow: 'The Festival',
+          title: 'The Tech Pavilion.',
+          body: 'Your journey begins here. Discover sleek check-in kiosks, interactive welcome booths, and your gateway to the future.',
+          tags: [],
+          cta: { primary: { label: 'Register Today', href: '#registration' },
+                 secondary: { label: 'Back to Top', href: '#top' } },
+        },
+      ],
+      connectors: [], // Continuous forward take architecture, no connectors needed
+    });
+    document.getElementById('registration').style.display = 'block';
+  </script>
+</body>
+</html>
