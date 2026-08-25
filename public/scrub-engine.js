@@ -275,10 +275,10 @@ function mountLetsScroll(container, config) {
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
       if (!s.hasClip || !s.ready || !s.video) continue;
-      // Never queue a seek while the decoder is still resolving the last one.
-      // On phones a fast flick would otherwise pile up seeks and freeze the clip;
-      // cur keeps lerping, so we snap to the latest target the moment it's free.
-      if (s.video.seeking) continue;
+      // Never queue a seek while the decoder is still resolving the last one ON PHONES.
+      // On desktop, skipping seeks causes the video to visually freeze ("get stuck")
+      // for a few frames during rapid scrolls before jumping ahead.
+      if (isMobile() && s.video.seeking) continue;
       if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
       s.cur += (s.target - s.cur) * (reduce ? 1 : 0.18);
       const dur = s.video.duration || 1;
