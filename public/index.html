@@ -172,14 +172,23 @@
       color: var(--sw-ink) !important;
     }
     
+    @keyframes nav-wiggle {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-3deg) scale(1.05); }
+      50% { transform: rotate(3deg) scale(1.05); }
+      75% { transform: rotate(-3deg) scale(1.05); }
+    }
+
     .sw-nav__item {
       color: var(--sw-ink-soft) !important;
       font-weight: 600;
+      display: inline-block; /* Required for transform animations to work properly on span/button */
     }
     
     .sw-nav__item:hover {
       color: var(--sw-ink) !important;
       background: rgba(0, 0, 0, 0.04) !important;
+      animation: nav-wiggle 0.35s ease-in-out;
     }
 
     .sw-nav__item.is-active {
