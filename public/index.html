@@ -152,11 +152,12 @@
 
     /* Topbar Premium Glass Header */
     .sw-topbar {
-      background: rgba(255, 255, 255, 0.85) !important;
+      /* Elegant gradient fading from solid to softer transparency */
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%) !important;
       backdrop-filter: blur(32px) !important;
       -webkit-backdrop-filter: blur(32px) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
       padding-top: 14px !important;
       padding-bottom: 14px !important;
     }
