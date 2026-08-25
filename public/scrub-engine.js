@@ -271,9 +271,12 @@ function mountLetsScroll(container, config) {
   }
 
   function raf() {
-    // With All-Intra (GOP=1) videos, we can drop epsilon to near zero 
-    // to sync every single micro-frame of the scroll perfectly.
-    const eps = 0.001;
+    // To stop frames from "sticking", we must NEVER ask the browser to seek unless 
+    // we have actually moved far enough to hit the NEXT frame.
+    // Since the videos are 24fps, each frame is ~0.04s long. 
+    // Setting eps to 0.04 prevents the engine from overloading the browser by 
+    // requesting the exact same frame 10 times in a row.
+    const eps = 0.04; 
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
       if (!s.hasClip || !s.ready || !s.video) continue;
@@ -282,9 +285,8 @@ function mountLetsScroll(container, config) {
       // for a few frames during rapid scrolls before jumping ahead.
       if (isMobile() && s.video.seeking) continue;
       if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
-      // Tightened lerp factor (0.25) to map the video 1:1 with your scroll wheel 
-      // for true frame-by-frame scrubbing feeling.
-      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.25);
+      // Fluid tracking for perfect sync
+      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.20);
       const dur = s.video.duration || 1;
       const t = clamp(s.cur, 0, 0.999) * dur;
       if (Math.abs(s.video.currentTime - t) > eps) { try { s.video.currentTime = t; } catch (e) {} }
