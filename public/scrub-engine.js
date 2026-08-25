@@ -115,7 +115,6 @@ function mountLetsScroll(container, config) {
   const topbar = el('div', 'sw-topbar');
   if (config.brand) {
     const brand = el('a', 'sw-brand'); brand.href = (config.brand.href || '#');
-    brand.appendChild(el('span', 'sw-brand__mark'));
     const nm = el('span', 'sw-brand__name'); nm.innerHTML = config.brand.name || ''; brand.appendChild(nm);
     topbar.appendChild(brand);
   }
