@@ -271,8 +271,9 @@ function mountLetsScroll(container, config) {
   }
 
   function raf() {
-    // Increase epsilon slightly to reduce decode frequency on low-end devices
-    const eps = isMobile() ? 0.04 : 0.012;
+    // With All-Intra (GOP=1) videos, we can drop epsilon to near zero 
+    // to sync every single micro-frame of the scroll perfectly.
+    const eps = 0.001;
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
       if (!s.hasClip || !s.ready || !s.video) continue;
@@ -281,9 +282,9 @@ function mountLetsScroll(container, config) {
       // for a few frames during rapid scrolls before jumping ahead.
       if (isMobile() && s.video.seeking) continue;
       if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
-      // Lower lerp factor (0.10 instead of 0.18) for a much smoother, buttery cinematic glide
-      // This floatier movement naturally hides decode lag on lower-end devices.
-      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.10);
+      // Tightened lerp factor (0.25) to map the video 1:1 with your scroll wheel 
+      // for true frame-by-frame scrubbing feeling.
+      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.25);
       const dur = s.video.duration || 1;
       const t = clamp(s.cur, 0, 0.999) * dur;
       if (Math.abs(s.video.currentTime - t) > eps) { try { s.video.currentTime = t; } catch (e) {} }
