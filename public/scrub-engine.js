@@ -271,22 +271,15 @@ function mountLetsScroll(container, config) {
   }
 
   function raf() {
-    // To stop frames from "sticking", we must NEVER ask the browser to seek unless 
-    // we have actually moved far enough to hit the NEXT frame.
-    // Since the videos are 24fps, each frame is ~0.04s long. 
-    // Setting eps to 0.04 prevents the engine from overloading the browser by 
-    // requesting the exact same frame 10 times in a row.
-    const eps = 0.04; 
+    const eps = isMobile() ? 0.04 : 0.012;
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
       if (!s.hasClip || !s.ready || !s.video) continue;
       // Never queue a seek while the decoder is still resolving the last one ON PHONES.
-      // On desktop, skipping seeks causes the video to visually freeze ("get stuck")
-      // for a few frames during rapid scrolls before jumping ahead.
       if (isMobile() && s.video.seeking) continue;
       if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
-      // Fluid tracking for perfect sync
-      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.20);
+      // Buttery smooth, floaty cinematic glide (0.10 lerp)
+      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.10);
       const dur = s.video.duration || 1;
       const t = clamp(s.cur, 0, 0.999) * dur;
       if (Math.abs(s.video.currentTime - t) > eps) { try { s.video.currentTime = t; } catch (e) {} }
